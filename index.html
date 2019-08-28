@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Bookmarks</title>
+    <link href="/styles/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <h1><span class = "titleStyle">My Bookmarks</span></h1>
+        <form name = "userChoice" id= "userChoice">
+            <div class = "addButtonArea">
+                <button type = "button" id ="addButton"> Add </button>
+                <!-- <button type = "button" id ="addButton" onclick="renderInputForm()">Add</button> -->
+            </div>
+                <div class= "selectionBox">
+                <p> Minimum Rating to Display</p>
+                <select>              
+                    <option value = "5"> 5 </option>
+                    <option value = "4"> 4 </option>
+                    <option value = "3"> 3 </option>
+                    <option value = "2"> 2 </option>
+                    <option value = "1"> 1 </option>                
+                </select>
+            </div>
+        </form>
+    </header>
+    <main>
+        <section class = "resultsDisplay">
+            <div class = "outputContainer">
+                <div class = "textArea"></div>
+                <div class = "buttonArea">
+                    <button type = "button"> - </button>
+                    <button type = "button"> Remove </button>
+                    <button type = "button"> Edit </button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/scripts/data.js"></script>
+    <script src="/scripts/script.js"></script>
+</body>
