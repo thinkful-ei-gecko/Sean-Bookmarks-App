@@ -9,37 +9,16 @@
 </head>
 <body>
     <header>
-        <h1><span class = "titleStyle">My Bookmarks</span></h1>
-        <form name = "userChoice" id= "userChoice">
-            <div class = "addButtonArea">
-                <button type = "button" id ="addButton"> Add </button>
-                <!-- <button type = "button" id ="addButton" onclick="renderInputForm()">Add</button> -->
-            </div>
-                <div class= "selectionBox">
-                <p> Minimum Rating to Display</p>
-                <select>              
-                    <option value = "5"> 5 </option>
-                    <option value = "4"> 4 </option>
-                    <option value = "3"> 3 </option>
-                    <option value = "2"> 2 </option>
-                    <option value = "1"> 1 </option>                
-                </select>
-            </div>
-        </form>
+        <h1><span id = "titleStyle">My Bookmarks</span></h1>
+        <div class = "formInsert"></div>
     </header>
     <main>
-        <section class = "resultsDisplay">
-            <div class = "outputContainer">
-                <div class = "textArea"></div>
-                <div class = "buttonArea">
-                    <button type = "button"> - </button>
-                    <button type = "button"> Remove </button>
-                    <button type = "button"> Edit </button>
-                </div>
-            </div>
-        </section>
+        <div class = "bookmarkList"></div>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/scripts/data.js"></script>
-    <script src="/scripts/script.js"></script>
+    <script src="/scripts/dataOps.js"></script>
+    <script src="/scripts/api.js"></script>
+    <script src="/scripts/bookmark.js"></script>
+    <script src="/scripts/bookmarkList.js"></script>
+    <script src="/scripts/index.js"></script>
 </body>
