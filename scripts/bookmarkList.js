@@ -49,9 +49,7 @@ const bookmarkList = (function () {
             </div>
            </div>`;  
   };
-
-  //<button type = "button" id = 'editButton'> Edit </button>
-
+  
   let renderBookmarkElementExpanded = function(item) {
     console.log(item.expanded);
     if (item.expanded === true) {
