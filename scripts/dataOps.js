@@ -23,13 +23,6 @@ const dataOps = (function () {
     item.expanded = !item.expanded;
   };
 
-//   let setRatingFilter = function () {
-
-//   };
-
-  let setBookmarkEditing = function () {
-
-  };
 
   return {
     bookmarks:[],

@@ -1,17 +1,12 @@
 'use strict';
 
-// const STORE = {};
-
-// const bookmarkList = [];
-
 const bookmarkList = (function () {
 
   let renderForm = function() {
     $('form').on('click', '#addButton', function(event){
-      event.preventDefault();  
       $('form').html(`<div class = "formInput">
                 <p id= "titleText">Title: </p>
-                <input type="text" name="title" id="title" class = "movieTitle" required /><br>
+                <input type="text" name="title" id="title" class = "movieTitle" required/><br>
                 <p id= "urlLabel"> URL: </p>
                 <input type="text" name="url" id ="url" required />
                 <section class = "movieRating">
@@ -33,11 +28,11 @@ const bookmarkList = (function () {
                 </section>
                 </div>`);
     });
+
   };
 
   
   let renderBookmarkElement = function(bookmark) {
-      console.log(bookmark);
         return `<div class = "outputContainer" data-item-id="${bookmark.id}">
                 <div class = "textArea">
                 <p id="movieTitleStyle"> Title: ${bookmark.title} </p>
@@ -49,9 +44,8 @@ const bookmarkList = (function () {
             </div>
            </div>`;  
   };
-  
+
   let renderBookmarkElementExpanded = function(item) {
-    console.log(item.expanded);
     if (item.expanded === true) {
     return `<div class = "outputContainer" data-item-id="${item.id}">
     <div class = "textArea">
@@ -133,16 +127,22 @@ else
       event.preventDefault();
       const newTitle = $('#title').val();
       const newURL = $('input#url').val();
+      let urlVerification = newURL.slice(0,4);
       const newDesc = $('#desc').val();
       const newRating = $('input[name="rating"]:checked').val();           
-      console.log (newTitle + newURL +  newDesc + newRating);
+      if (urlVerification !== 'http') {
+        alert ("Not a valid URL");
+        render();
+      }
+      else
       api.createBookmark(newTitle, newURL, newDesc, newRating)
         .then(response => response.json())
         .then((newBookmark) => {
           dataOps.addBookmark(newBookmark); 
-          renderBookmarkElement(newBookmark);
           renderAllElements();
           render();
+          bookmarkList.bindEventListeners();      
+        
         });
     });
   };
@@ -169,7 +169,6 @@ else
     $('.bookmarkList').on('click', '#removeButton', event => {
         event.preventDefault();
         const id = getBookmarkIdFormElement(event.currentTarget);
-        console.log(id);
         api.deleteBookmark(id)
         .then(() => {
             dataOps.findAndDelete(id);
