@@ -65,7 +65,6 @@ const bookmarkList = (function () {
     <div class = "buttonArea">
         <button type = "button" id = 'expandButton'> - </button>
         <button type = "button" id = 'removeButton'> Remove </button>
-        <button type = "button" id = 'editButton'> Edit </button>
     </div>
     </div>`; }
 else
