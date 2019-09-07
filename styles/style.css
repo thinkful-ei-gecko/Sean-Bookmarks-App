@@ -15,12 +15,17 @@ h1 {
     text-align: center;
 }
 
+body, html{
+    background-image: linear-gradient(#3D5770, #95C0E2);  
+    height: 100%;
+}
+
 body {
     display:flex;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     font-size: 1em;
     flex-direction: column;
-    background-color: #CEDFFF;
+    /* background-color: #CEDFFF; */
 }
 
 form {
@@ -206,6 +211,11 @@ input {
 }  */
 
 @media screen and (min-width: 720px) {
+    body, html{
+        background-image: linear-gradient(#3D5770, #95C0E2);  
+        height: 100%;
+    }
+
     .outputContainer {
         display: flex;
         border: 2px;
@@ -224,6 +234,11 @@ input {
 }
 
 @media screen and (min-width: 1020px) {
+    body, html{
+        background-image: linear-gradient(#3D5770, #95C0E2 );  
+        height: 100%;
+    }
+
     p {
         font-size: 1.1em;
     }
