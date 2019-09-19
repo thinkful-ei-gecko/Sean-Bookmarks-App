@@ -177,7 +177,7 @@ section.movieRating {
     display:flex;
     flex-direction: column;
     flex-wrap:nowrap;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 #radioBox {
@@ -205,9 +205,17 @@ input {
     margin-bottom:5px;
 }
 
- /* #movieTitleStyle {
-    font-weight: bold;
-}  */
+#ratingStyle {
+    color: #B46C1F;
+}
+
+select.viewByRating {
+    font-size: 1em;
+}
+
+section.submitArea > button {
+   display:inline-block;
+}
 
 @media screen and (min-width: 720px) {
     body, html{

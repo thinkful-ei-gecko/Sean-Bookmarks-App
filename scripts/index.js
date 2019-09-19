@@ -1,6 +1,8 @@
 'use strict';
 
 $(document).ready(function() {
+    //bookmarkList.render();
+    //bookmarkList.bindEventListeners();
     bookmarkList.render();
     api.getBookmarks()
     .then(response => response.json())

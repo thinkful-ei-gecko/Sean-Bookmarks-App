@@ -3,7 +3,11 @@
 const bookmarkList = (function () {
 
   let renderForm = function() {
-    $('form').on('click', '#addButton', function(event){
+    //$('form').off();
+    //$('form').off('click', '.uploadButton');
+    //$('form').on('click', '.uploadButton');
+    $(document.body).on('click', '#addButton', function(event){
+      event.preventDefault();
       $('form').html(`<div class = "formInput">
                 <p id= "titleText">Title: </p>
                 <input type="text" name="title" id="title" class = "movieTitle" required/><br>
@@ -18,25 +22,30 @@ const bookmarkList = (function () {
                       ating3" class="rating" name="rating" value="3"><label for "rating5">3</label>
                       <input type="radio" id="rating2" class="rating" name="rating" value="2"><label for "rating5">2</label>
                       <input type="radio" id="rating1" class="rating" name="rating" value="1"><label for "rating5">1</label>
-                    </div>
+                      </div>
                 </section>
                 <p> Description: </p>
                 <input type= "text" name = "desc" id="desc" class ="description">
                 <section class = "submitArea">
-                    <input type= "submit" class="uploadButton" value="Upload Movie">
-                    <input type= "button" class="cancel" value="Cancel">
+                    <button type= "button" class="uploadButton" value="Upload Movie">Upload Movie</button>
+                    <button type= "button" class="cancel" value="Cancel">Cancel</button>
                 </section>
                 </div>`);
     });
+    //handleNewBookmarkSubmit();
 
   };
 
   
   let renderBookmarkElement = function(bookmark) {
+        let newRating = "";
+        for (let i=0; i < bookmark.rating; i++) {
+            newRating = newRating + '&#10038';
+        }
         return `<div class = "outputContainer" data-item-id="${bookmark.id}">
                 <div class = "textArea">
                 <p id="movieTitleStyle"> Title: ${bookmark.title} </p>
-                <p> URL: <p> <a href = "${bookmark.url}">${bookmark.url}</a>
+                <p> Rating: <span id="ratingStyle"> ${newRating} </span> </p>
                 </div>
                 <div class = "buttonArea">
                 <button type = "button" id = 'expandButton'> - </button>
@@ -46,12 +55,16 @@ const bookmarkList = (function () {
   };
 
   let renderBookmarkElementExpanded = function(item) {
+    let newRating = "";
+    for (let i=0; i < item.rating; i++) {
+        newRating = newRating + '&#10038';
+    }
     if (item.expanded === true) {
     return `<div class = "outputContainer" data-item-id="${item.id}">
     <div class = "textArea">
         <p id="movieTitleStyle"> Title: ${item.title} </p>
-        <p> URL: <p> <a href = "${item.url}">${item.url}</a>
-        <p> Rating: ${item.rating} </p>
+        <p> Rating: <span id="ratingStyle">${newRating}</span> </p>
+        <p> URL: <p> <a href = "${item.url}" target="_blank">${item.url}</a>
         <p> Description : ${item.desc} </p>
         </div>
     <div class = "buttonArea">
@@ -63,7 +76,7 @@ else
     return `<div class = "outputContainer" data-item-id="${item.id}">
     <div class = "textArea">
     <p id="movieTitleStyle"> Title: ${item.title} </p>
-    <p> URL: <p> <a href = "${item.url}">${item.url}</a>
+    <p> Rating: <span id="ratingStyle">${newRating} </span></p>
     </div>
     <div class = "buttonArea">
     <button type = "button" id = 'expandButton'> - </button>
@@ -102,6 +115,7 @@ else
   }
 
   let render = function () {
+    //bookmarkList.bindEventListeners();
     $('.formInsert').html(`<form name = "userChoice" id= "userChoice">
         <p> Are You Ready to Add Your Favorite Movie Bookmarks?</p>
         <div class = "addButtonArea">
@@ -114,7 +128,8 @@ else
                 <option value = "4"> 4 </option>
                 <option value = "3"> 3 </option>
                 <option value = "2"> 2 </option>
-                <option value = "1"> 1 </option>                
+                <option value = "1"> 1 </option>
+                <option value = "0"> None Given </option>                
             </select>
         </div>
         <div class = "inputArea"></div>
@@ -123,13 +138,19 @@ else
   };
 
   let handleNewBookmarkSubmit = function () {
-    $('form').submit(function (event) {
+    $(document.body).on('click', '.uploadButton', function (event) {
+      if ($('#title').val()===(null||'')){
+        alert("Please Enter a Movie Title");
+      }
       event.preventDefault();
+      console.log("I have been clicked - New Bookmark!");
       const newTitle = $('#title').val();
       const newURL = $('input#url').val();
       let urlVerification = newURL.slice(0,4);
-      const newDesc = $('#desc').val();
-      const newRating = $('input[name="rating"]:checked').val();           
+      let newDesc = 'Not Entered';
+      let newRating;
+      newDesc = $('#desc').val();
+      newRating = $('input[name="rating"]:checked').val();       
       if (urlVerification !== 'http') {
         alert ("Not a valid URL");
         render();
@@ -141,10 +162,11 @@ else
           dataOps.addBookmark(newBookmark); 
           renderAllElements();
           render();
-          bookmarkList.bindEventListeners();      
-        
+          //bookmarkList.bindEventListeners();      
         });
+        //$('form').off('click', '.uploadButton');
     });
+    //bookmarkList.bindEventListeners();
   };
 
 
@@ -156,17 +178,20 @@ else
 
   let handleExpandBookmark = function () {
     $('.bookmarkList').on('click', '#expandButton', event => {
+        console.log("I have been clicked - expand")
         event.preventDefault();
         const id = getBookmarkIdFormElement(event.currentTarget);
-        const item =dataOps.findById(id);
+        const item = dataOps.findById(id);
+        console.log(item);
         dataOps.toggleExpand(item);
-        renderBookmarkElementExpanded(item);
         renderAllElementsExpanded();
+        renderBookmarkElementExpanded(item);
     });
   };
 
   let handleDeleteBookmark = function () {
     $('.bookmarkList').on('click', '#removeButton', event => {
+      console.log("I have been clicked - remove bookmark");
         event.preventDefault();
         const id = getBookmarkIdFormElement(event.currentTarget);
         api.deleteBookmark(id)
@@ -182,7 +207,7 @@ else
   };
 
   let handleRatingFilter = function () {
-    $('form').on('click', '.viewByRating', (function(event) {
+    $(document.body).on('click', '.viewByRating', (function(event) {
         console.log("I have been clicked");
         event.preventDefault();
         renderSomeElements();
@@ -196,8 +221,9 @@ else
   };
 
   let handleCancel = function () {
-    $('form').on('click', '.cancel', (function(event) {
+    $(document.body).on('click', '.cancel', (function(event) {
       event.preventDefault(); 
+      console.log("I have been clicked - Cancel Button");
       render();
     }));
   };
@@ -210,17 +236,26 @@ else
     handleRatingFilter();
     handleItemEditing();
     handleCancel();
+    //renderForm();
   };
 
   return {
     bindEventListeners:bindEventListeners,
     render:render,
-    renderForm:renderForm,
-    renderAllElements:renderAllElements,
-    renderAllElementsExpanded:renderAllElementsExpanded,
-    renderBookmarkElement:renderBookmarkElement,
-    renderBookmarkElementExpanded:renderBookmarkElementExpanded,
-    renderSomeElements:renderSomeElements,
+    renderForm,
+    renderAllElements,
+    renderAllElementsExpanded,
+    renderBookmarkElement,
+    renderBookmarkElementExpanded,
+    renderSomeElements
+    // bindEventListeners:bindEventListeners,
+    // render:render,
+    // renderForm:renderForm,
+    // renderAllElements:renderAllElements,
+    // renderAllElementsExpanded:renderAllElementsExpanded,
+    // renderBookmarkElement:renderBookmarkElement,
+    // renderBookmarkElementExpanded:renderBookmarkElementExpanded,
+    // renderSomeElements:renderSomeElements,
   };
 
 })();

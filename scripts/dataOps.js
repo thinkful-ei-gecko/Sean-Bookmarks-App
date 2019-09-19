@@ -26,7 +26,7 @@ const dataOps = (function () {
 
   return {
     bookmarks:[],
-    expanded:false,
+    expanded:null,
     addBookmark,
     findAndDelete,
     findAndUpdate,

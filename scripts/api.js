@@ -9,7 +9,7 @@ const api = (function () {
     return(fetch(BASE_URL));
   };
 
-  let createBookmark = function(title, url, desc = '', rating='') {
+  let createBookmark = function(title, url, desc, rating) {
     let newBookmark = {
       'title': title,
       'url' : url,
