@@ -3,9 +3,6 @@
 const bookmarkList = (function () {
 
   let renderForm = function() {
-    //$('form').off();
-    //$('form').off('click', '.uploadButton');
-    //$('form').on('click', '.uploadButton');
     $(document.body).on('click', '#addButton', function(event){
       event.preventDefault();
       $('form').html(`<div class = "formInput">
@@ -32,8 +29,6 @@ const bookmarkList = (function () {
                 </section>
                 </div>`);
     });
-    //handleNewBookmarkSubmit();
-
   };
 
   
@@ -115,7 +110,6 @@ else
   }
 
   let render = function () {
-    //bookmarkList.bindEventListeners();
     $('.formInsert').html(`<form name = "userChoice" id= "userChoice">
         <p> Are You Ready to Add Your Favorite Movie Bookmarks?</p>
         <div class = "addButtonArea">
@@ -143,7 +137,6 @@ else
         alert("Please Enter a Movie Title");
       }
       event.preventDefault();
-      console.log("I have been clicked - New Bookmark!");
       const newTitle = $('#title').val();
       const newURL = $('input#url').val();
       let urlVerification = newURL.slice(0,4);
@@ -161,12 +154,9 @@ else
         .then((newBookmark) => {
           dataOps.addBookmark(newBookmark); 
           renderAllElements();
-          render();
-          //bookmarkList.bindEventListeners();      
+          render();  
         });
-        //$('form').off('click', '.uploadButton');
     });
-    //bookmarkList.bindEventListeners();
   };
 
 
@@ -178,7 +168,6 @@ else
 
   let handleExpandBookmark = function () {
     $('.bookmarkList').on('click', '#expandButton', event => {
-        console.log("I have been clicked - expand")
         event.preventDefault();
         const id = getBookmarkIdFormElement(event.currentTarget);
         const item = dataOps.findById(id);
@@ -191,7 +180,6 @@ else
 
   let handleDeleteBookmark = function () {
     $('.bookmarkList').on('click', '#removeButton', event => {
-      console.log("I have been clicked - remove bookmark");
         event.preventDefault();
         const id = getBookmarkIdFormElement(event.currentTarget);
         api.deleteBookmark(id)
@@ -202,13 +190,8 @@ else
     });
   };
 
-  let handleUpdateBookmark = function () {
-
-  };
-
   let handleRatingFilter = function () {
     $(document.body).on('click', '.viewByRating', (function(event) {
-        console.log("I have been clicked");
         event.preventDefault();
         renderSomeElements();
     }));
@@ -223,7 +206,6 @@ else
   let handleCancel = function () {
     $(document.body).on('click', '.cancel', (function(event) {
       event.preventDefault(); 
-      console.log("I have been clicked - Cancel Button");
       render();
     }));
   };
@@ -232,11 +214,9 @@ else
     handleNewBookmarkSubmit();
     handleExpandBookmark();
     handleDeleteBookmark();
-    handleUpdateBookmark();
     handleRatingFilter();
     handleItemEditing();
     handleCancel();
-    //renderForm();
   };
 
   return {
@@ -248,14 +228,6 @@ else
     renderBookmarkElement,
     renderBookmarkElementExpanded,
     renderSomeElements
-    // bindEventListeners:bindEventListeners,
-    // render:render,
-    // renderForm:renderForm,
-    // renderAllElements:renderAllElements,
-    // renderAllElementsExpanded:renderAllElementsExpanded,
-    // renderBookmarkElement:renderBookmarkElement,
-    // renderBookmarkElementExpanded:renderBookmarkElementExpanded,
-    // renderSomeElements:renderSomeElements,
   };
 
 })();
